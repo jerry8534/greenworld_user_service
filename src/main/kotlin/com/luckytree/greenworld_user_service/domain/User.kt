@@ -1,4 +1,7 @@
 package com.luckytree.greenworld_user_service.domain
 
-class User {
+import javax.persistence.Entity
+
+@Entity
+class User : BaseTimeEntity() {
 }
