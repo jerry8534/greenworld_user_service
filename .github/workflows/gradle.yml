@@ -22,8 +22,12 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
     - name: Build with Gradle
-      run: ./gradlew build -x test
+      run: ./gradlew bootJar -x test
+
+    - name: Build the Docker image
+      run: docker build . --file dockerfile --tag greenworld_user_service:$(date +%s)
 
 
-    - name: TEST with Gradle
-      run: ./gradlew test --stacktrace
+
+    # - name: TEST with Gradle
+    #   run: ./gradlew test --stacktrace
