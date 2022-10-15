@@ -44,7 +44,7 @@ jobs:
         DATE_TIME: $(date "+%Y%m%d")
         IMAGE_TAG: latest
       run: |
-        docker buildx build --platform=linux/amd64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:$DATE_TIME .
+        docker buildx build --platform=linux/amd64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . -t $ECR_REGISTRY/$ECR_REPOSITORY:$DATE_TIME
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$DATE_TIME
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
