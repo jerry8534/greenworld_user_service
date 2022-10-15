@@ -47,19 +47,15 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-    - name: Build the Docker image
-      run: docker build . --file dockerfile --tag greenworld_user_service:latest
+    # - name: Build the Docker image
+    #   run: docker build . --file dockerfile --tag greenworld_user_service:latest
 
-    - name: add tag docker image
-      run: docker tag greenworld_user_service:latest greenworld_user_service:$(date +%s)
+    # - name: add tag docker image
+    #   run: docker tag greenworld_user_service:latest greenworld_user_service:$(date +%s)
 
-    - name: add tag docker image
-      run: docker tag greenworld_user_service:latest 846426794755.dkr.ecr.ap-northeast-2.amazonaws.com/greenworld:latest
+    # - name: add tag docker image
+    #   run: docker tag greenworld_user_service:latest 846426794755.dkr.ecr.ap-northeast-2.amazonaws.com/greenworld:latest
 
-    - name: push docker image to ecr
-      # run: docker push 846426794755.dkr.ecr.ap-northeast-2.amazonaws.com/greenworld:latest
-      run: docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-
-    # - name: TEST with Gradle
-    #   run: ./gradlew test --stacktrace
+    # - name: push docker image to ecr
+    #   # run: docker push 846426794755.dkr.ecr.ap-northeast-2.amazonaws.com/greenworld:latest
+    #   run: docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
