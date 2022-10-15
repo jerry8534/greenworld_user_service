@@ -41,7 +41,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: greenworld_user_service
-        DATE_TIME: $(date "+%Y%m%d")
+        DATE_TIME: $(date "+%Y%m%d%H%M%S")
         IMAGE_TAG: latest
       run: |
         export timedata=$(date "+%Y%m%d")
