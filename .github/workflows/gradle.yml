@@ -45,7 +45,8 @@ jobs:
         IMAGE_TAG: latest
       run: |
         export timedata=$(date "+%Y%m%d")
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:$timedata  .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  .
+        docker tag  $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$timedata
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$timedata
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
