@@ -44,23 +44,14 @@ jobs:
         DATE_TIME: $(date "+%Y%m%d")
         IMAGE_TAG: latest
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        export timedata=$(date "+%Y%m%d")
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:$timedata  .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$timedata
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image2
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: greenworld_user_service
-        DATE_TIME: $(date "+%Y%m%d")
-        IMAGE_TAG: latest
-      run: |
-        echo "$(date "+%Y%m%d")"
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$DATE_TIME .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$DATE_TIME
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$DATE_TIME"
+
 
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
