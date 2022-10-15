@@ -29,6 +29,23 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
 
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: greenworld
+        IMAGE_TAG: greenworld_user_service:latest
+      run: |
+        docker buildx build --platform=linux/amd64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          
+
     - name: Build with Gradle
       run: ./gradlew bootJar -x test
 
@@ -42,7 +59,8 @@ jobs:
       run: docker tag greenworld_user_service:latest 846426794755.dkr.ecr.ap-northeast-2.amazonaws.com/greenworld:latest
 
     - name: push docker image to ecr
-      run: docker push 846426794755.dkr.ecr.ap-northeast-2.amazonaws.com/greenworld:latest
+      # run: docker push 846426794755.dkr.ecr.ap-northeast-2.amazonaws.com/greenworld:latest
+      run: docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
 
     # - name: TEST with Gradle
