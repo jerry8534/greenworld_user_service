@@ -2,7 +2,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "make_gitAction" ]
+    branches: [ "master" ]
   # pull_request:
   #   branches: [ "make_gitAction" ]
 
@@ -41,10 +41,9 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: greenworld_user_service
-        DATE_TIME: $(date "+%Y%m%d%H%M%S")
         IMAGE_TAG: latest
       run: |
-        export timedata=$(date "+%Y%m%d")
+        export timedata=$(date "+%Y%m%d%H%M%S")
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  .
         docker tag  $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$timedata
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
