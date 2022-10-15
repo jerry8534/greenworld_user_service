@@ -33,6 +33,8 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Build with Gradle
+      run: ./gradlew bootJar -x test
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -44,10 +46,6 @@ jobs:
         docker buildx build --platform=linux/amd64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          
-
-    - name: Build with Gradle
-      run: ./gradlew bootJar -x test
 
     - name: Build the Docker image
       run: docker build . --file dockerfile --tag greenworld_user_service:latest
