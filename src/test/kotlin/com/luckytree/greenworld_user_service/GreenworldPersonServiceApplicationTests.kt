@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.Extension
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class GreenworldUserServiceApplicationTests {
+class GreenworldPersonServiceApplicationTests {
 
 	@Test
 	fun contextLoads() {
