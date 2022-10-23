@@ -61,6 +61,7 @@ class SecurityConfig(
 
             .and()
             .authorizeRequests()
+            .antMatchers("/page/**").permitAll()
             .antMatchers("/api/hello").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/signup").permitAll()
