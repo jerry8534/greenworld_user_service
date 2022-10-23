@@ -60,6 +60,16 @@ class SecurityConfig(
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
             .and()
+            .formLogin()
+            .loginPage("/page/login")
+            .loginProcessingUrl("/api/signup")
+            .defaultSuccessUrl("/page/home", true)
+            .failureUrl("/login.html?error=true")
+            .and()
+            .logout()
+            .logoutUrl("/perform_logout")
+
+            .and()
             .authorizeRequests()
             .antMatchers("/page/**").permitAll()
             .antMatchers("/api/hello").permitAll()

@@ -12,4 +12,9 @@ class WebController {
     fun goHome(): String {
         return "index"
     }
+
+    @GetMapping("/login")
+    fun goLogin(): String {
+        return "login"
+    }
 }
